@@ -14,6 +14,8 @@ services:
       - ./certs:/etc/nginx/certs:ro
     networks:
       - proxy
+    labels:
+        com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy:
   nginx-gen:
     image: jwilder/docker-gen
     container_name: nginx-gen
@@ -42,3 +44,8 @@ networks:
   proxy:
     external:
       name: proxy
+
+volumes:
+    nginx-conf:
+    nginx-vhost:
+    nginx-confd:
