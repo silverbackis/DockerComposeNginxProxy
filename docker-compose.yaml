@@ -12,8 +12,6 @@ services:
       - /usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      - proxy
   letsencrypt-nginx-proxy-companion:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
@@ -26,6 +24,6 @@ services:
       - NGINX_PROXY_CONTAINER=nginx-proxy
 
 networks:
-  proxy:
+  default:
     external:
       name: proxy
