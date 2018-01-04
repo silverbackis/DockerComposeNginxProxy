@@ -12,8 +12,6 @@ services:
       - /etc/nginx/vhost.d
       - /usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
-    networks:
-      - proxy
   nginx-gen:
     image: jwilder/docker-gen
     container_name: nginx-gen
@@ -39,7 +37,7 @@ services:
       - NGINX_PROXY_CONTAINER=nginx-proxy
 
 networks:
-  proxy:
+  default:
     external:
       name: proxy
 
