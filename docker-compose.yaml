@@ -8,12 +8,13 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./etc/nginx/vhost.d:/etc/nginx/vhost.d
-      - ./usr/share/nginx/html:/usr/share/nginx/html
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
     networks:
       - proxy
+      - default
     deploy:
       restart_policy:
         condition: on-failure
@@ -27,9 +28,9 @@ services:
     links:
       - nginx-proxy
     volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./etc/nginx/vhost.d:/etc/nginx/vhost.d
-      - ./usr/share/nginx/html:/usr/share/nginx/html
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx.tpl:/etc/docker-gen/templates/nginx.tpl:ro
@@ -48,9 +49,9 @@ services:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: letsencrypt-nginx-proxy-companion
     volumes:
-      - ./etc/nginx/conf.d:/etc/nginx/conf.d
-      - ./etc/nginx/vhost.d:/etc/nginx/vhost.d
-      - ./usr/share/nginx/html:/usr/share/nginx/html
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
@@ -69,3 +70,8 @@ networks:
   proxy:
     external:
       name: proxy
+
+volumes:
+    conf:
+    vhost:
+    html:
