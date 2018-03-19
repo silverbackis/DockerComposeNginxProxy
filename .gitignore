@@ -1,6 +1,5 @@
 *
 !certs
-!current
 !.gitignore
 !docker-compose.yaml
 !nginx.tpl
