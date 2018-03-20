@@ -2,6 +2,6 @@
 !certs
 !.gitignore
 !docker-compose.yaml
-!nginx.tpl
-!my_proxy.conf
-!Dockerfile
+!docker/nginx.tpl
+!docker
+!docker/*
