@@ -1,7 +1,7 @@
 *
-!certs
+!certs/
+!certs/.gitkeep
 !.gitignore
 !docker-compose.yaml
-!docker/nginx.tpl
-!docker
+!docker/
 !docker/*
