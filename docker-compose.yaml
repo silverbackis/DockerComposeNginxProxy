@@ -2,9 +2,7 @@ version: "3"
 
 services:
   nginx-proxy:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
+    image: nginx
     container_name: nginx-proxy
     ports:
       - "80:80"
@@ -14,6 +12,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
+      - ./my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf:rw
     networks:
       - proxy
       - default
