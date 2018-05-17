@@ -5,3 +5,5 @@
 !docker-compose.yaml
 !docker/
 !docker/*
+!README.md
+!LICENSE
