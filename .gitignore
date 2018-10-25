@@ -1,9 +1,1 @@
-*
-!certs/
-!certs/.gitkeep
-!.gitignore
-!docker-compose.yaml
-!docker/
-!docker/*
-!README.md
-!LICENSE
+certs

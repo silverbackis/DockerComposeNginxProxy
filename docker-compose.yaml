@@ -1,8 +1,10 @@
-version: "3"
+version: "3.7"
 
 services:
   nginx-proxy:
-    image: silverbackis/nginx:proxy
+    build:
+      context: .
+      dockerfile: ./nginx-proxy/Dockerfile
     container_name: nginx-proxy
     ports:
       - "80:80"
@@ -12,13 +14,15 @@ services:
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
-      - ./docker/my_proxy.conf:/etc/nginx/conf.d/my_proxy.conf:rw
     networks:
       - proxy
       - default
+    restart: on-failure
 
   nginx-gen:
-    image: jwilder/docker-gen
+    build:
+      context: .
+      dockerfile: ./nginx-gen/Dockerfile
     container_name: nginx-gen
     links:
       - nginx-proxy
@@ -28,14 +32,16 @@ services:
       - html:/usr/share/nginx/html
       - ./certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./docker/nginx.tpl:/etc/docker-gen/templates/nginx.tpl:ro
     command: -notify-sighup nginx-proxy -watch /etc/docker-gen/templates/nginx.tpl /etc/nginx/conf.d/default.conf
     networks:
       - proxy
       - default
+    restart: on-failure
 
   letsencrypt-nginx-proxy-companion:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    build:
+      context: .
+      dockerfile: ./letsencrypt-nginx-proxy-companion/Dockerfile
     container_name: letsencrypt-nginx-proxy-companion
     volumes:
       - conf:/etc/nginx/conf.d
@@ -51,6 +57,7 @@ services:
     depends_on:
       - nginx-proxy
       - nginx-gen
+    restart: on-failure
 
 networks:
   proxy:
